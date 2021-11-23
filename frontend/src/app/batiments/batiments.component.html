@@ -1,0 +1,82 @@
+<div class="container">
+    <br>
+
+    <mat-toolbar>
+        <span> Gestion bâtiments du client ID:{{client}}</span>
+        <span class="example-spacer"></span>
+        <button mat-raised-button [routerLink]="['/Clients']">
+            <mat-icon> assignment_return</mat-icon>
+            <span>Retourner</span>
+        </button>
+    </mat-toolbar>
+    <br>
+
+    <!-- Content -->
+    <div class="search-div">
+        <button mat-raised-button color="primary" (click)="onCreate()">
+            <mat-icon>add_circle_outline</mat-icon> Ajouter
+        </button>
+        <mat-form-field class="search-form-field" floatLabel="never">
+            <input matInput [(ngModel)]="searchKey" placeholder="Taper un mot clé" autocomplete="off"
+                (keyup)="applyFilter()">
+            <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div class="mat-elevation-z8">
+        <mat-table [dataSource]="listData" matSort>
+            <ng-container matColumnDef="Id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.Id}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Adresse">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Adresse</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.Adresse}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Ville">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Ville</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.Ville}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="CodePostal">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>CodePostal</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.CodePostal}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <button mat-icon-button (click)="onEdit(row)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="onDelete(row.Id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="loading">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    Loading data...
+                </mat-footer-cell>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <mat-footer-cell *matFooterCellDef colspan="6">
+                    No data.
+                </mat-footer-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']"
+                [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}">
+            </mat-footer-row>
+
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<mat-toolbar>
+    <span class="fill-remaining-space">Modifier le bâtiment ID: {{data.Id}}</span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+        <mat-icon>clear</mat-icon>
+    </button>
+</mat-toolbar>
+<form [formGroup]="FormBatiment" class="normal-form" (submit)="onSubmit()">
+    <mat-grid-list cols="1" rowHeight="90px">
+        <mat-grid-tile>
+            <div class="controles-container">
+                <mat-form-field><textarea formControlName="Adresse" rows="3" matInput placeholder="Adresse*"></textarea>
+                    <mat-error
+                        *ngIf="FormBatiment.get('Adresse').hasError('maxlength') &&!FormBatiment.get('Adresse').hasError('required')">
+                        Ce champs comporte au maximum 10 caractères.
+                    </mat-error>
+                    <mat-error *ngIf="FormBatiment.get('Adresse').hasError('required')">
+                        Ce champs est obligatoire.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div class="controles-container">
+                <mat-form-field><input formControlName="Ville" matInput placeholder="Ville">
+                    <mat-error
+                        *ngIf="FormBatiment.get('Ville').hasError('maxlength') &&!FormBatiment.get('Ville').hasError('required')">
+                        Ce champs comporte au maximum 10 caractères.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div class="controles-container">
+                <mat-form-field><input formControlName="CodePostal" matInput placeholder="Code Postal">
+                    <mat-error *ngIf="FormBatiment.get('CodePostal').hasError('pattern')">
+                        Ce champs doit comporter 4 chiffres sans espaces. Exemple : 1234
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+
+
+
+
+        <mat-grid-tile>
+            <div class="button-row">
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="FormBatiment.invalid">Modifier</button>
+
+
+            </div>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</form>
